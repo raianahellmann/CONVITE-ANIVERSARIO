@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎉 Convite Raiana</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      color: #DCDCDC;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .terminal {
+      background-color: #111;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #FF1493;
+      width: 100%;
+      max-width: 600px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .output {
+      white-space: pre-wrap;
+      font-size: 1.2em;
+      line-height: 1.5em;
+      min-height: 100px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: transparent;
+      border: 1px solid #DCDCDC;
+      color: #DCDCDC;
+      padding: 10px 20px;
+      font-family: 'Courier New', Courier, monospace;
+      cursor: pointer;
+      margin: 5px;
+      transition: background 0.3s;
+      width: 100%;
+      max-width: 200px;
+    }
+
+    button:hover {
+      background-color: #FF1493;
+      color: #000;
+    }
+
+    .folders {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .info-box {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #FF1493;
+      border-radius: 5px;
+      background-color: #000;
+    }
+
+    a {
+      color: #FF1493;
+      text-decoration: underline;
+    }
+
+    .icon-btn {
+      background-color: transparent;
+      border: 1px solid #DCDCDC;
+      color: #DCDCDC;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      width: 100%;
+      max-width: 200px;
+    }
+
+    .icon-btn img {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .icon-btn:hover {
+      background-color: #FF1493;
+      color: #000;
+    }
+
+    .icon-btn:hover img {
+      transform: scale(1.2);
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      max-width: 300px;
+      border-radius: 5%;
+      display: block;
+      margin: auto;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+  <div class="terminal">
+    <div class="output" id="output">você está convidado(a) para comemorar os 19 anos da Raiana! 🥳</div>
+    <button id="accessBtn">acessar</button>
+
+    <div class="folders" id="folders">
+      <img src="WhatsApp Image 2025-04-19 at 10.35.37.jpeg" alt="foto de sapata">
+      <button onclick="showInfo(1)">📁 detalhes do evento</button>
+      <button onclick="showInfo(2)">📁 localização</button>
+      <button onclick="showInfo(3)">📁 comida e bebida</button>
+      <div class="icon-btn" onclick="openVideo()" aria-label="Abrir vídeo no YouTube">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="Ícone YouTube">
+      </div>
+    </div>
+
+    <div class="info-box" id="infoBox"></div>
+  </div>
+
+  <script>
+    const accessBtn = document.getElementById("accessBtn");
+    const folders = document.getElementById("folders");
+    const infoBox = document.getElementById("infoBox");
+    const output = document.getElementById("output");
+
+    accessBtn.addEventListener("click", () => {
+      accessBtn.style.display = "none";
+      folders.style.display = "flex";
+      output.textContent = "conto com a tua presença!";
+      launchFireworks();
+    });
+
+    function showInfo(folderNumber) {
+      let content = "";
+
+      if (folderNumber === 1) {
+        content = `
+          📅 <strong>Data:</strong> 10/05<br>
+          🕖 <strong>Hora:</strong> 19:00<br>
+          📍 <strong>Local:</strong> espaço pontosat (antiga oditur)
+        `;
+      } else if (folderNumber === 2) {
+        content = `
+          segue a loc:<br><br>
+          <button onclick="openMaps()">abrir no google maps</button>
+        `;
+      } else if (folderNumber === 3) {
+        content = `
+          os comes tá por minha conta, mas os bebes é por tua responsabilidade!<br>
+          se for beber, leva o que vai consumir 🍻😜
+        `;
+      }
+
+      infoBox.innerHTML = content;
+      infoBox.style.display = "block";
+    }
+
+    function openMaps() {
+      window.open("https://www.google.com/maps?q=-28.260529,-49.020390", "_blank");
+    }
+
+    function openVideo() {
+      window.open("https://youtu.be/U5BGX_7ucEQ?si=s4_a6_J1Ivv1584P", "_blank");
+    }
+
+    function launchFireworks() {
+      const duration = 2000;
+      const end = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
+
+      const interval = setInterval(() => {
+        const timeLeft = end - Date.now();
+
+        if (timeLeft <= 0) {
+          clearInterval(interval);
+        }
+
+        confetti(Object.assign({}, defaults, {
+          particleCount: 50,
+          origin: { x: Math.random(), y: Math.random() - 0.2 }
+        }));
+      }, 250);
+    }
+  </script>
+</body>
+</html>
